@@ -1,18 +1,13 @@
-url: https://seandavi.github.io/BuildABiocWorkshop
-
+url: https://mtmorgan.github.io/XM2023
 template:
   params:
     bootswatch: flatly
-    #ganalytics: UA-99999999-9
-
 home:
-  title: "BuildABiocWorkshop"
+  title: "Talk and Short Course Material for R / Bioconductor XM2023"
   type: inverse
-
-
 navbar:
   right:
    - icon: fa-github
-     href: https://github.com/seandavi/BuildABiocWorkshop
+     href: https://github.com/mtmorgan/XM2023
      
 

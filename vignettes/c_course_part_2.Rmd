@@ -1,0 +1,38 @@
+---
+title: "C. R / Bioconductor for Genomic Analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{C. R / Bioconductor for Genomic Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This workshop walks through a single-cell RNAseq analysis using
+[Seurat][] and *R* / *Bioconductor* packages in the online resource
+[Orchestrating Single-Cell Analysis with Bioconductor][OSCA]. The
+workshop assumes some familiarity with *R*, and sufficient domain
+knowledge to know at a superficial level the technical details and
+scientific motivation for single-cell analysis. The main goal is to
+increase participants' confidence in using *R* to embark on creative
+and critical data exploration -- analysis of single cell data is
+seldom straight-forward, requiring understanding of methods and
+critical assessment of data at many steps.
+
+[OSCA]: https://bioconductor.org/books/release/OSCA/
+[Seurat]: https://satijalab.org/seurat/index.html
+
+# Session information
+
+This document was produced with the following *R* software:
+
+```{r session_info}
+sessionInfo()
+```
+

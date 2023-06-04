@@ -1,0 +1,22 @@
+---
+title: "A. How Bioconductor Advances Science"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A. How Bioconductor Advances Science}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Bioinformatic researchers contribute to science through development of
+innovative methods, and through application of established methods to
+understand data they and their collaborators generate. *Bioconductor*
+(https://bioconductor.org) plays an essential role, providing a
+way for researchers to share their scientific contributions with a
+wide audience while encouraging many 'best practices' in software
+development, dissemination, and use. But science and technology change
+quickly. This talk addresses how *R* / *Bioconductor* adapts to
+challenges like single-cell and spatial genomics, multi-omics, using
+*R* with other software languages, containerization, and cloud
+computing initiatives.
+
+Slides for this talk will be linked from this page.

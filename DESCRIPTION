@@ -1,28 +1,35 @@
-Package: BuildABiocWorkshop
-Title: Bioconductor or R Workshop Template and Github Actions
-Version: 2.0.0
-Authors@R: 
-    person(given = "Sean",
-           family = "Davis",
-           role = c("aut", "cre"),
-           email = "seandavi@gmail.com",
-           comment = c(ORCID = "0000-0002-8991-6458"))
-Description: This package serves as a template for using github actions to 
-    prepare a Bioconductor Workshop package for use. In particular,
-    a pkgdown website and docker image are generated based on workflow 
-    settings. 
-License: MIT + file LICENSE
+Package: XM2023
+Title: Talk and Short Course Material for R / Bioconductor XM2023
+Version: 0.0.0.9001
+Authors@R: c(
+    person(
+        "Martin", "Morgan",
+        email = "mtmorgan.bioc@gmail.com",
+        role = c("aut", "cre"),
+        comment = c(ORCID = "0000-0002-5874-8148")
+    ),
+    person(
+        "NIH NHGRI U24HG004059",
+        role = "fnd"
+    ))
+Description: This *R* package includes material presented at the
+    international conference of the Brazilian Association for
+    Bioinformatics and Computational Biology, held in Curitiba,
+    Paraná, from 13 to 16 June 2023
+    <https://x-meeting.com/events/2023>. Dr. Morgan presented a talk
+    on the contribution and future of Bioconductor, and two short
+    courses illustrating how *R* can be used in the comprehension and
+    communication of bioinformatic results, and how *Bioconductor*
+    packages contribute to the analysis of current high-throughput
+    single-cell and image-based genomic analysis.
+License: Artistic-2.0
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
-Depends: 
-    Biobase
+RoxygenNote: 7.2.3
 Suggests: 
-    knitr,
-    rmarkdown,
-    pkgdown
-URL: https://seandavi.github.io/BuildABiocWorkshop/
-BugReports: https://github.com/seandavi/BuildABiocWorkshop/issues/new/choose
+    knitr, rmarkdown, pkgdown,
+    dplyr, readr, ggplot2, plotly
 VignetteBuilder: knitr
-DockerImage: ghcr.io/seandavi/buildabiocworkshop:latest
+URL: https://mtmorgan.github.io/XM2023MM/
+BugReports: https://github.com/mtmorgan/XM2023MM/issues
+DockerImage: ghcr.io/mtmorgan/XM2023:latest
