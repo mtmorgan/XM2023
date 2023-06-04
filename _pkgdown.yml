@@ -1,7 +1,4 @@
 url: https://mtmorgan.github.io/XM2023
-template:
-  params:
-    bootswatch: flatly
 home:
   title: "Talk and Short Course Material for R / Bioconductor XM2023"
   type: inverse
@@ -9,5 +6,8 @@ navbar:
   right:
    - icon: fa-github
      href: https://github.com/mtmorgan/XM2023
-     
+template:
+  bootstrap: 5
+  params:
+    bootswatch: flatly
 
