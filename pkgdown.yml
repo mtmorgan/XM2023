@@ -1,0 +1,12 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  a_talk: a_talk.html
+  b_course_part_1: b_course_part_1.html
+  c_course_part_2: c_course_part_2.html
+last_built: 2023-06-04T16:53Z
+urls:
+  reference: https://mtmorgan.github.io/XM2023/reference
+  article: https://mtmorgan.github.io/XM2023/articles
+
