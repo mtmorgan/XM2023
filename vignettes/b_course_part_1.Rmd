@@ -97,7 +97,7 @@ This section makes use of [dplyr][], [readr][], [ggplot2][], and
 [readr]: https://cran.r-project.org/package=readr
 [plotly]: https://cran.r-project.org/package=plotly
 
-```{r tidy-pkgs}
+```{r tidy-pkgs, message = FALSE}
 pkgs <- c("dplyr", "readr", "ggplot2", "plotly")
 need <- pkgs[!pkgs %in% rownames(installed.packages())]
 if (length(need))
@@ -117,6 +117,13 @@ Why do I like 'tidy' analysis?
   easy-to-understand order.
 
 ```{r tidy-example}
+library(dplyr)
+
+## a familiar built-in dataset, represented as a `tibble()`...
+mtcars_tbl <-
+    mtcars |>
+    as_tibble(rownames = "model")
+mtcars_tbl
 ```
 
 The [dplyr][] package is at the center of 'tidy' analysis
@@ -143,16 +150,60 @@ The [dplyr][] package is at the center of 'tidy' analysis
   (`left_join()`) or second (`right_join()`) or both (`inner_join()`)
   tibble.
 
+```{r}
+## count # of cars with 4, 6, ... cylinders
+mtcars_tbl |>
+    count(cyl)
+
+## select specific columns and filter rows based on 'cyl' and 'mpg'
+mtcars_tbl |>
+    select(model, mpg, cyl, disp) |>
+    filter(
+        cyl >= 8,
+        mpg > 15
+    )
+```
+
 Visualization
 
 - A key to communicating results
 - [ggplot2][] provides a 'grammar of graphics' to produce high-quality
   graphics.
+
+```{r}
+library(ggplot2)
+plt <-
+    ggplot(mtcars_tbl) +
+    aes(x = factor(cyl), y = mpg) +
+    geom_boxplot() +
+    geom_jitter()
+plt
+```
+
 - [plotly][] provides interactivity (e.g., 'mouse over' a point to see
   the details of the point), which can be very useful when trying to
   communicate results in an exploratory manner.
 
-## Case study: single-cell UMAP
+```{r, message = FALSE}
+library(plotly)
+plt <-
+    ggplot(mtcars_tbl) +
+    aes(x = factor(cyl), y = mpg, text = model) +
+    geom_jitter(width = .25) +
+    geom_boxplot()
+ggplotly(plt)
+```
+
+# Case study: single-cell UMAP
+
+Load a 'csv' (comma-separated value) file prepared with the a 'UMAP'.
+
+```{r, eval = FALSE}
+## use `file.choose()` or similar for your own data sets
+umap_csv_file <- system.file(package= "XM2023", "extdata", "umap.csv")
+umap_data <- readr::read_csv(umap_csv_file)
+umap_data
+```
 
 # Reproducibility
 

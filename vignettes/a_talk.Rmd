@@ -19,4 +19,6 @@ challenges like single-cell and spatial genomics, multi-omics, using
 *R* with other software languages, containerization, and cloud
 computing initiatives.
 
-Slides for this talk will be linked from this page.
+[Slides are available][slides].
+
+[slides]: https://docs.google.com/presentation/d/1oy8Cw4z6IAeq0_nFD1skSrlso5yUI0z-WqbSO270ecE/edit?usp=sharing

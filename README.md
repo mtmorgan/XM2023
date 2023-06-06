@@ -1,10 +1,11 @@
 # XM2023 -- Brazilian Association for Bioinformatics and Computational Biology
 
-This resource includes material presented at the international
-conference of the Brazilian Association for Bioinformatics and
-Computational Biology, held in Curitiba Paraná, from 13 to 16
-June 2023. Dr. Morgan presented a talk and two short courses. The
-talk addressed the contribution and future of *Bioconductor*.
+This resource includes material presented at [XM2023][], the
+international conference of the Brazilian Association for
+Bioinformatics and Computational Biology, held in Curitiba Paraná,
+from 13 to 16 June 2023. Dr. Morgan presented a talk and two short
+courses. The talk addressed the contribution and future of
+*Bioconductor*.
 
 - [A. How *Bioconductor* Advances Science][A]
 
@@ -22,6 +23,7 @@ along.
 - [B. Using R to Understand Bioinformatic Results][B]
 - [C. R / Bioconductor for Genomic Analysis][C]
 
+[XM2023]: https://x-meeting.com/events/xm2023
 [A]: articles/a_talk.html
 [B]: articles/b_course_part_1.html
 [C]: articles/c_course_part_2.html
