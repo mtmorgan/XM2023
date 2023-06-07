@@ -24,9 +24,6 @@ for data management and [ggplot2][] for data visualization. The
 workshop concludes with a short tour of approaches to enhance
 reproducible research in our day-to-day work.
 
-[dplyr]: https://cran.r-project.org/package=dplyr
-[ggplot2]: https://cran.r-project.org/package=ggplot2
-
 # Essential _R_
 
 A simple calculator
@@ -251,6 +248,7 @@ maintenance of their package.
 [Bioconductor]: https://bioconductor.org/packages
 [dplyr]: https://cran.r-project.org/package=dplyr
 [ggplot2]: https://cran.r-project.org/package=ggplot2
+[plotly]: https://cran.r-project.org/package=plotly
 
 ## Help & Vignettes
 
@@ -267,7 +265,7 @@ maintenance of their package.
 
 # Bioinformatics -- scRNA-seq
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo = FALSE}
 h5ad <- zellkonverter::readH5AD(h5ad_file, reader = "R", use_hdf5 = FALSE)
 
 col_data <-
@@ -348,7 +346,7 @@ plt
 
 Make this interactive, for mouse-over 'tool tips' and 'brushing' selection
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(plotly)
 ggplotly(plt) |>
     toWebGL()
