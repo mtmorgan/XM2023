@@ -1,9 +1,11 @@
-FROM bioconductor/bioconductor_docker:devel
+FROM bioconductor/bioconductor_docker:RELEASE_3_17
 
 WORKDIR /home/rstudio
 
 COPY --chown=rstudio:rstudio . /home/rstudio/
 
-RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); BiocManager::install(ask=FALSE)"
+ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=TRUE
 
-RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); devtools::install('.', dependencies=TRUE, build_vignettes=TRUE, repos = BiocManager::repositories())"
+RUN Rscript -e "options(Ncpus = parallel::detectCores()); BiocManager::install(ask=FALSE, version = '3.17')"
+
+RUN Rscript -e "options(Ncpus = parallel::detectCores()); devtools::install('.', dependencies=TRUE, build_vignettes=TRUE, repos = BiocManager::repositories())"
