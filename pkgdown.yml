@@ -4,8 +4,11 @@ pkgdown_sha: ~
 articles:
   a_talk: a_talk.html
   b_course_part_1: b_course_part_1.html
-  c_course_part_2: c_course_part_2.html
-last_built: 2023-06-10T20:00Z
+  c_0_course_part_2: c_0_course_part_2.html
+  c_1_cxg: c_1_cxg.html
+  c_2_osca_cell_annotation: c_2_osca_cell_annotation.html
+  c_3_osca_differential_expression: c_3_osca_differential_expression.html
+last_built: 2023-06-10T22:58Z
 urls:
   reference: https://mtmorgan.github.io/XM2023/reference
   article: https://mtmorgan.github.io/XM2023/articles
