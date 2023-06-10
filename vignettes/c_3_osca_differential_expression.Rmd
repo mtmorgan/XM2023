@@ -10,7 +10,9 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  ## too much memory for GitHub actions
+  eval = !nzchar(Sys.getenv("BIOCONDUCTOR_DOCKER_VERSION"))
 )
 ```
 
