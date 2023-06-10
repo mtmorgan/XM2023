@@ -288,7 +288,8 @@ counts <- Matrix::sparseMatrix(
 Matrix::writeMM(counts, "inst/scrnaseq-counts.mtx")
 
 col_data <-
-    SingleCellExperiment::colData(h5ad) |> as_tibble(rownames = "cell_id")
+    SingleCellExperiment::colData(h5ad) |>
+    as_tibble(rownames = "cell_id")
 umap <- SingleCellExperiment::reducedDim(h5ad, "X_umap")
 colnames(umap) <- c("UMAP_1", "UMAP_2")
 col_data <-
@@ -492,15 +493,6 @@ E.g., add information about each unfiltered gene from `row_data`.
 Many other annotation resources available, to help place information
 about genes into biological context.
 
-# More to come...
-
-Tomorrow
-
-- Discover single-cell data sets in the CELLxGENE data portal
-- Download and import data sets as 'Seurat' or 'SingleCellExperiment'
-  objects.
-- Coordinate cell annotation and gene annotation
-
 # Reproducibility
 
 Packages
@@ -556,7 +548,18 @@ Containers
 [docker]: https://www.docker.com
 [singularity]: https://sylabs.io/
 
-# Session information
+# Summary
+
+## More to come...
+
+Tomorrow
+
+- Discover single-cell data sets in the CELLxGENE data portal
+- Download and import data sets as 'Seurat' or 'SingleCellExperiment'
+  objects.
+- Coordinate cell annotation and gene annotation
+
+## Session information
 
 This document was produced with the following *R* software:
 

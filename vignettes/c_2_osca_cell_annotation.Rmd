@@ -1,0 +1,137 @@
+---
+title: "C.2 Annotating cell types"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{C.2 Annotating cell types}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Orchestrating Single-Cell Analysis with _Bioconductor_
+
+[OSCA][] -- an amazing resource!
+
+[OSCA]: https://bioconductor.org/books/OSCA
+
+# Annotating cell types
+
+This script is derived from the [OSCA Basic][OSCA-B] book, [Chapter
+7][OSCA-B-7]: Cell type annotation. See the book for full details.
+
+```{r, echo = FALSE, message = FALSE}
+library(DropletTestFiles)
+library(DropletUtils)
+library(scater)
+library(EnsDb.Hsapiens.v86)
+library(scran)
+library(celldex)
+library(SingleR)
+```
+
+## Initial analysis
+
+```{r}
+## data retrieval
+library(DropletTestFiles)
+raw.path <- getTestFile("tenx-2.1.0-pbmc4k/1.0.0/raw.tar.gz")
+out.path <- file.path(tempdir(), "pbmc4k")
+untar(raw.path, exdir=out.path)
+
+## input
+library(DropletUtils)
+fname <- file.path(out.path, "raw_gene_bc_matrices/GRCh38")
+sce.pbmc <- read10xCounts(fname, col.names=TRUE)
+
+## annotation
+library(scater)
+rownames(sce.pbmc) <- uniquifyFeatureNames(
+    rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol
+)
+
+## qc
+set.seed(100)
+e.out <- emptyDrops(counts(sce.pbmc))
+sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
+
+## normalization
+library(scran)
+set.seed(1000)
+clusters <- quickCluster(sce.pbmc)
+sce.pbmc <- computeSumFactors(sce.pbmc, cluster=clusters)
+sce.pbmc <- logNormCounts(sce.pbmc)
+
+## variance modeling
+set.seed(1001)
+dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
+top.pbmc <- getTopHVGs(dec.pbmc, prop=0.1)
+
+## dimensionality reduction
+set.seed(10000)
+sce.pbmc <- denoisePCA(sce.pbmc, subset.row=top.pbmc, technical=dec.pbmc)
+
+set.seed(100000)
+sce.pbmc <- runTSNE(sce.pbmc, dimred="PCA")
+
+set.seed(1000000)
+sce.pbmc <- runUMAP(sce.pbmc, dimred="PCA")
+
+## clustering
+g <- buildSNNGraph(sce.pbmc, k=10, use.dimred = 'PCA')
+clust <- igraph::cluster_walktrap(g)$membership
+colLabels(sce.pbmc) <- factor(clust)
+```
+
+## Using curated reference data
+
+Use a curated reference data set, in this case derived from Blueprint
+and ENCODE data.
+
+```{r}
+library(celldex)
+ref <- BlueprintEncodeData()
+colData(ref) |>
+    dplyr::as_tibble()
+colData(ref) |>
+    dplyr::as_tibble() |>
+    dplyr::count(label.main, sort = TRUE)
+```
+
+Annotate our data using the 'main' label for cell type
+
+```{r}
+library(SingleR)
+## assign each cell in sce.pbmc to a type
+pred <- SingleR(test=sce.pbmc, ref=ref, labels=ref$label.main)
+pred
+pred |>
+    dplyr::as_tibble() |>
+    dplyr::count(labels)
+
+plotScoreHeatmap(pred)
+```
+
+## Other strategies
+
+Other strategies ouline in [Chapter 7][OSCA-B-7]
+
+- Custom references
+- Gene sets
+- Markers
+
+[OSCA-B]: https://bioconductor.org/books/OSCA.basic
+[OSCA-B-7]: https://bioconductor.org/books/release/OSCA.basic/cell-type-annotation.html
+
+# Session information
+
+This document was produced with the following *R* software:
+
+```{r session_info}
+sessionInfo()
+```

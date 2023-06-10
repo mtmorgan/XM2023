@@ -1,0 +1,125 @@
+---
+title: "C.3 Differential Expression"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{C.3 Differential Expression}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Orchestrating Single-Cell Analysis with _Bioconductor_
+
+[OSCA][] -- an amazing resource!
+
+[OSCA]: https://bioconductor.org/books/OSCA
+
+# Differential expression
+
+This script is derived from the [OSCA Multi-Sample][OSCA-M] book,
+[Chapter 4][OSCA-M-4]: DE analyses between conditions. See the book
+for full details.
+
+```{r, echo = FALSE, message = FALSE}
+library(MouseGastrulationData)
+library(scater)
+library(scran)
+library(batchelor)
+requireNamespace("igraph")
+```
+
+## Initial analysis
+
+```{r, message = FALSE}
+## load data
+library(MouseGastrulationData)
+sce.chimera <- WTChimeraData(samples=5:10)
+sce.chimera
+
+## feature annotation
+library(scater)
+rownames(sce.chimera) <- uniquifyFeatureNames(
+    rowData(sce.chimera)$ENSEMBL, rowData(sce.chimera)$SYMBOL
+)
+
+## qc
+drop <- sce.chimera$celltype.mapped %in% c("stripped", "Doublet")
+sce.chimera <- sce.chimera[,!drop]
+
+## normalization
+sce.chimera <- logNormCounts(sce.chimera)
+
+## variance modeling
+library(scran)
+dec.chimera <- modelGeneVar(sce.chimera, block=sce.chimera$sample)
+chosen.hvgs <- dec.chimera$bio > 0
+
+## merge batches
+library(batchelor)
+set.seed(01001001)
+merged <- correctExperiments(
+    sce.chimera, 
+    batch=sce.chimera$sample, 
+    subset.row=chosen.hvgs,
+    PARAM=FastMnnParam(
+        merge.order=list(
+            list(1,3,5), # WT (3 replicates)
+            list(2,4,6)  # td-Tomato (3 replicates)
+        )
+    )
+)
+
+## cluster
+g <- buildSNNGraph(merged, use.dimred="corrected")
+clusters <- igraph::cluster_louvain(g)
+colLabels(merged) <- factor(clusters$membership)
+
+## dimensionality reduction
+merged <- runTSNE(merged, dimred="corrected", external_neighbors=TRUE)
+merged <- runUMAP(merged, dimred="corrected", external_neighbors=TRUE)
+```
+
+
+## Differential expression
+
+Initial observations -- labels are similar, whether a 'td-Tomato'
+positive cell or not.
+
+```{r}
+colData(merged) |>
+    dplyr::as_tibble() |>
+    dplyr::count(label, tomato) |>
+    tidyr::pivot_wider(names_from = "tomato", values_from = "n")
+
+plotTSNE(merged, colour_by="tomato", text_by="label", point_size = .1)
+```
+
+Create pseudo-bulk samples
+
+```{r}
+# Using 'label' and 'sample' as our two factors; each column of the output
+# corresponds to one unique combination of these two factors.
+summed <- aggregateAcrossCells(
+    merged, 
+    id=colData(merged)[, c("celltype.mapped", "sample")]
+)
+summed
+```
+
+[OSCA-M]: https://bioconductor.org/books/OSCA.multisample/
+[OSCA-M-4]: https://bioconductor.org/books/release/OSCA.multisample/multi-sample-comparisons.html
+
+# Session information
+
+This document was produced with the following *R* software:
+
+```{r session_info}
+sessionInfo()
+```
+
