@@ -1,10 +1,8 @@
-FROM bioconductor/bioconductor_docker:RELEASE_3_17
+FROM bioconductor/bioconductor_docker:devel
 
 WORKDIR /home/rstudio
 
 COPY --chown=rstudio:rstudio . /home/rstudio/
-
-ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=TRUE
 
 RUN Rscript -e "options(Ncpus = parallel::detectCores()); BiocManager::install(ask=FALSE, version = '3.17')"
 

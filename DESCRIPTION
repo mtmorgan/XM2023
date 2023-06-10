@@ -1,6 +1,6 @@
 Package: XM2023
 Title: Talk and Short Course Material for R / Bioconductor XM2023
-Version: 0.0.0.9003
+Version: 0.0.0.9004
 Authors@R: c(
     person(
         "Martin", "Morgan",
@@ -32,6 +32,6 @@ Suggests:
     AnnotationHub, ensembldb,
     cellxgenedp, Seurat, SingleCellExperiment
 VignetteBuilder: knitr
-URL: https://mtmorgan.github.io/XM2023MM/
-BugReports: https://github.com/mtmorgan/XM2023MM/issues
+URL: https://mtmorgan.github.io/XM2023/
+BugReports: https://github.com/mtmorgan/XM2023/issues
 DockerImage: ghcr.io/mtmorgan/XM2023:latest
