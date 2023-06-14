@@ -1,6 +1,6 @@
 Package: XM2023
 Title: Talk and Short Course Material for R / Bioconductor XM2023
-Version: 0.0.0.9007
+Version: 0.0.0.9008
 Authors@R: c(
     person(
         "Martin", "Morgan",

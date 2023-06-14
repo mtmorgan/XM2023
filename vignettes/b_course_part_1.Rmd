@@ -493,6 +493,90 @@ E.g., add information about each unfiltered gene from `row_data`.
 Many other annotation resources available, to help place information
 about genes into biological context.
 
+## Experiments
+
+_Bioconductor_ provides 'experiment' data in addition to software
+packages and annotation resources. Experiment data includes datasets
+used for training and other purposes; they are often made available
+through a package.
+
+Load the [MouseGastrulationData][] package and an example single cell
+experiment
+
+```{r, message = FALSE}
+library(MouseGastrulationData)
+sce <- WTChimeraData(samples=5:10)
+sce
+```
+
+Use `colData()` and dplyr to explore cell annotations
+
+```{r}
+colData(sce)
+colData(sce) |>
+    dplyr::as_tibble() |>
+    dplyr::count(sample)
+colData(sce) |>
+    dplyr::as_tibble() |>
+    dplyr::count(celltype.mapped)
+```
+
+Use the `counts()` accessor to obtain the genes x cells matrix of
+counts of reads mapped to each gene. Use `colSums()` and the base
+graphics `hist()` to summarize the number of reads per cell.
+
+```{r}
+hist(colSums(counts(sce)), main = "reads per cell")
+```
+
+Likewise for summarizing log + 1 reads per gene, using 'pipes'
+
+```{r}
+sce |>
+    counts() |>
+    rowSums() |>
+    log1p() |>
+    hist(main = "log1p reads per gene")
+```
+
+The row data contains just Ensembl and gene symbol annotations. From
+the 'MouseGastrulationData' vignette, this experiment used Ensembl
+mouse annotations, version 92. Discover and retrieve these annotations
+using [AnnotationHub][]
+
+```{r}
+## Ensembl 92 genome annotation
+library(AnnotationHub)
+ah <- AnnotationHub()
+query(ah, c("EnsDb", "Mus musculus", "92"))
+edb <- ah[["AH60992"]]
+```
+
+Check out the [ensembldb][] vignette. Retrieve additional annotations
+available on genes
+
+```{r}
+genes(edb)
+```
+
+Use a filter to identify genes on chromosome 1, and in the row names
+of `sce`
+
+```{r}
+filter <- list(
+    SeqNameFilter("1"),
+    AnnotationFilter(~gene_id %in% rownames(sce))
+)
+chr1 <- genes(edb, filter = filter)
+```
+
+Finally, subset the SingleCellExperiment to contain just genes on
+chromsoome 1.
+
+```{r}
+sce[names(chr1), ]
+```
+
 # Reproducibility
 
 Packages
