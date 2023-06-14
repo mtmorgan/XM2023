@@ -1,5 +1,9 @@
 # XM2023 -- Brazilian Association for Bioinformatics and Computational Biology
 
+This document is located at https://mtmorgan.github.io/XM2023
+
+![](man/figures/bit.ly_3p1SE4J.jpeg)
+
 This resource includes material presented at [XM2023][], the
 international conference of the Brazilian Association for
 Bioinformatics and Computational Biology, held in Curitiba Paraná,

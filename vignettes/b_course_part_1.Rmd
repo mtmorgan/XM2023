@@ -577,6 +577,10 @@ chromsoome 1.
 sce[names(chr1), ]
 ```
 
+[MouseGastrulationData]: https://bioconductor.org/packages/MouseGastrulationData
+[AnnotationHub]: https://bioconductor.org/packages/AnnotationHub
+[ensembldb]: https://bioconductor.org/packages/ensembldb
+
 # Reproducibility
 
 Packages
