@@ -119,3 +119,7 @@ This document was produced with the following *R* software:
 sessionInfo()
 ```
 
+```{r include = FALSE}
+## clean up .GlobalEnv at end of vignette
+rm(list = ls(envir = .GlobalEnv, all.names = TRUE), envir = .GlobalEnv)
+```

@@ -135,3 +135,8 @@ This document was produced with the following *R* software:
 ```{r session_info}
 sessionInfo()
 ```
+
+```{r include = FALSE}
+## clean up .GlobalEnv at end of vignette
+rm(list = ls(envir = .GlobalEnv, all.names = TRUE), envir = .GlobalEnv)
+```
