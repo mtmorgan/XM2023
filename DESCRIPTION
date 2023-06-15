@@ -1,6 +1,6 @@
 Package: XM2023
 Title: Talk and Short Course Material for R / Bioconductor XM2023
-Version: 0.0.0.9011
+Version: 0.0.0.9012
 Authors@R: c(
     person(
         "Martin", "Morgan",
@@ -27,16 +27,16 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports:
-    dplyr, jsonlite, rjsoncons, cellxgenedp
+    dplyr, jsonlite, rjsoncons, cellxgenedp, curl
 Suggests: 
     knitr, rmarkdown, pkgdown,
     readr, ggplot2, plotly,
     AnnotationHub, ensembldb,
-    cellxgenedp, Seurat, SingleCellExperiment, zellkonverter,
+    Seurat, SingleCellExperiment, zellkonverter,
     DropletTestFiles, DropletUtils, scater, EnsDb.Hsapiens.v86, scran, celldex,
     SingleR,
     MouseGastrulationData, batchelor, igraph,
-    BiocFileCache, tidyr, curl
+    BiocFileCache, tidyr
 VignetteBuilder: knitr
 URL: https://mtmorgan.github.io/XM2023/
 BugReports: https://github.com/mtmorgan/XM2023/issues
