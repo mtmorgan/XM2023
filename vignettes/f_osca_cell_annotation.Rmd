@@ -1,8 +1,8 @@
 ---
-title: "C.2 Annotating cell types"
+title: "F. Annotating cell types in Bioconductor"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{C.2 Annotating cell types}
+  %\VignetteIndexEntry{F. Annotating cell types in Bioconductor}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -105,11 +105,12 @@ colData(ref) |>
 
 Annotate our data using the 'main' label for cell type
 
-```{r}
+```{r, warning = FALSE}
 library(SingleR)
 ## assign each cell in sce.pbmc to a type
 pred <- SingleR(test=sce.pbmc, ref=ref, labels=ref$label.main)
-pred
+pred |>
+    dplyr::as_tibble(rownames = "cell_id")
 pred |>
     dplyr::as_tibble() |>
     dplyr::count(labels)

@@ -1,8 +1,8 @@
 ---
-title: "C.3 Differential Expression"
+title: "G. Differential Expression in Bioconductor"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{C.3 Differential Expression}
+  %\VignetteIndexEntry{G. Differential Expression in Bioconductor}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
