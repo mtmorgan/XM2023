@@ -13,6 +13,18 @@ library(stats)
 library(graphics)
 ```
 
+To use this workshop
+
+1. Visit https://workshop.bioconductor.org/ 
+2. Register or log in
+3. choose the 'X-MEETING / BBS 2023'
+4. Wait, up to 5 minutes
+6. Click to open RStudio
+7. In RStudio, choose 'File' / 'Open File...' /
+   'vignetts/b_course_part_1.Rmd'
+
+![](images/galaxy-screen.png)
+
 This workshop introduces *R* as an essential tool in exploratory
 analysis of bioinformatic data. No previous experience with *R* is
 required. We start with a very short introduction to *R*, mentioning
@@ -124,9 +136,12 @@ system.time({
 })
 ```
 
+... or a package contributed by users to the Comprehensive R Archive
+Network ([CRAN][]), or to [Bioconductor][] or other repositories.
+
 ## Tidyverse
 
-The [dplyr][] package introduces the 'tidyverse'
+The [dplyr][] contributed CRAN package introduces the 'tidyverse'
 
 ```{r, message = FALSE}
 library(dplyr)
@@ -265,48 +280,6 @@ maintenance of their package.
 
 # Bioinformatics -- scRNA-seq
 
-```{r, eval = FALSE, echo = FALSE}
-collection_id <- "c9706a92-0e5f-46c1-96d8-20e42467f287"
-db <- cellxgenedp::db()
-dataset <-
-    cellxgenedp::datasets(db) |>
-    filter(collection_id %in% .env$collection_id)
-files <-
-    left_join(dataset, cellxgenedp::files(db), by = "dataset_id")
-h5ad_file <-
-    files |>
-    dplyr::filter(filetype == "H5AD") |>
-    cellxgenedp::files_download(dry.run = FALSE)
-
-h5ad <- zellkonverter::readH5AD(h5ad_file, reader = "R", use_hdf5 = FALSE)
-
-counts <- Matrix::sparseMatrix(
-    i = as.vector(rhdf5::h5read(h5ad_file, "/raw/X/indices")) + 1L,
-    p = as.vector(rhdf5::h5read(h5ad_file, "/raw/X/indptr")),
-    x = as.vector(rhdf5::h5read(h5ad_file, "/raw/X/data"))
-)
-Matrix::writeMM(counts, "inst/scrnaseq-counts.mtx")
-
-col_data <-
-    SingleCellExperiment::colData(h5ad) |>
-    as_tibble(rownames = "cell_id")
-umap <- SingleCellExperiment::reducedDim(h5ad, "X_umap")
-colnames(umap) <- c("UMAP_1", "UMAP_2")
-col_data <-
-    dplyr::bind_cols(col_data, umap) |>
-    select(cell_id, starts_with("UMAP"), everything())
-readr::write_csv(col_data, "inst/scrnaseq-cell-data.csv")
-
-row_data <-
-    SingleCellExperiment::rowData(h5ad) |>
-    as_tibble(rownames = "gene_id") |>
-    mutate(
-        mean_expression = Matrix::rowMeans(counts),
-        mean_log_expression = Matrix::rowMeans(log1p(counts))
-    )
-readr::write_csv(row_data, "inst/scrnaseq-gene-data.csv")
-```
-
 ## Cell summary
 
 Read a 'csv' file summarizing infomration about each cell in the
@@ -398,6 +371,50 @@ row_data |>
     ggplot() +
     aes(x = mean_log_expression) +
     geom_histogram()
+```
+
+Row (gene) data, column (cell) data, and a matrix of counts describe a
+single cell experiment. These can be assembled, along with other
+information about, e.g., reduced dimension representations, into a
+'SingleCellExperiment' _Bioconductor_ object (see
+`?SingleCellExperiment`).
+
+![](images/SingleCellExperiment.png)
+
+Here we illustrate this construction with some artificial data:
+
+```{r, message = FALSE}
+library(SingleCellExperiment)
+
+n_genes <- 200
+n_cells <- 100
+
+demo_count <- matrix(rpois(20000, 5), ncol=n_cells) # counts
+demo_log_count <- log2(demo_count + 1)              # log counts
+
+demo_row_data <- data.frame(
+    gene_id = paste0("gene_", seq_len(n_genes))
+)
+demo_column_data <- data.frame(
+    cell_id = paste0("cell_", seq_len(n_cells))
+)
+
+demo_pca <- matrix(runif(n_cells * 5), n_cells)
+demo_tsne <- matrix(rnorm(n_cells * 2), n_cells)
+demo_sce <- SingleCellExperiment(
+    assays=list(counts=demo_count, logcounts=demo_log_count),
+    colData = demo_column_data,
+    rowData = demo_row_data,
+    reducedDims=SimpleList(PCA=demo_pca, tSNE=demo_tsne)
+)
+demo_sce
+```
+
+Elements of the object can be obtained using 'accessors`, e.g.,
+
+```{r}
+colData(demo_sce) |>
+    as_tibble()
 ```
 
 # _Bioconductor_ resources
