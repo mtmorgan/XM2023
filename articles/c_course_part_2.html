@@ -6,12 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="XM2023">
-<title>C.1 CELLxGENE, Seurat, and Bioconductor • XM2023</title>
+<title>C. R and Bioconductor for Genomic Analysis • XM2023</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="C.1 CELLxGENE, Seurat, and Bioconductor">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="C. R and Bioconductor for Genomic Analysis">
 <meta property="og:description" content="XM2023">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">XM2023</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9011</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,10 +43,11 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/a_talk.html">A. How Bioconductor Advances Science</a>
     <a class="dropdown-item" href="../articles/b_course_part_1.html">B. Using R to Understand Bioinformatic Results</a>
-    <a class="dropdown-item" href="../articles/c_0_course_part_2.html">C.0 R and Bioconductor for Genomic Analysis</a>
-    <a class="dropdown-item" href="../articles/c_1_cxg.html">C.1 CELLxGENE, Seurat, and Bioconductor</a>
-    <a class="dropdown-item" href="../articles/c_2_osca_cell_annotation.html">C.2 Annotating cell types</a>
-    <a class="dropdown-item" href="../articles/c_3_osca_differential_expression.html">C.3 Differential Expression</a>
+    <a class="dropdown-item" href="../articles/c_course_part_2.html">C. R and Bioconductor for Genomic Analysis</a>
+    <a class="dropdown-item" href="../articles/d_cxg.html">D. From CELLxGENE to R and Bioconductor</a>
+    <a class="dropdown-item" href="../articles/e_sc_workflows.html">E. Seurat and Bioconductor Single-Cell Sequence Analysis Workflows</a>
+    <a class="dropdown-item" href="../articles/f_osca_cell_annotation.html">F. Annotating cell types in Bioconductor</a>
+    <a class="dropdown-item" href="../articles/g_osca_differential_expression.html">G. Differential Expression in Bioconductor</a>
   </div>
 </li>
       </ul>
@@ -73,19 +74,41 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>C.1 CELLxGENE, Seurat, and Bioconductor</h1>
+      <img src="" class="logo" alt=""><h1>C. R and Bioconductor for Genomic Analysis</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mtmorgan/XM2023/blob/HEAD/vignettes/c_1_cxg.Rmd" class="external-link"><code>vignettes/c_1_cxg.Rmd</code></a></small>
-      <div class="d-none name"><code>c_1_cxg.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/mtmorgan/XM2023/blob/HEAD/vignettes/c_course_part_2.Rmd" class="external-link"><code>vignettes/c_course_part_2.Rmd</code></a></small>
+      <div class="d-none name"><code>c_course_part_2.Rmd</code></div>
     </div>
 
     
     
-<div class="section level2">
-<h2 id="cellxgene-seurat-and-bioconductor">CELLxGENE, <em>Seurat</em> and <em>Bioconductor</em><a class="anchor" aria-label="anchor" href="#cellxgene-seurat-and-bioconductor"></a>
-</h2>
-</div>
+<p>This workshop walks through a single-cellsis with Bioconductor]<a href="https://bioconductor.org/books/release/OSCA/" class="external-link">OSCA</a> (OSCA). The
+workshop assumes some familiarity with <em>R</em>, and sufficient domain
+knowledge to know at a superficial level the technical details and
+scientific motivation for single-cell analysis. The main goal is to
+increase participants’ confidence in using <em>R</em> to embark on
+creative and critical data exploration – analysis of single cell data is
+seldom straight-forward, requiring understanding of methods and critical
+assessment of data at many steps.</p>
+<p>There are four parts to the workshop, probably we will not have time
+to work through all. The first two provide a high-level overview of how
+data available in the CELLxGENE portal can be used in the <a href="https://satijalab.org/seurat/index.html" class="external-link">Seurat</a> (Seurat is not
+a <em>Bioconductor</em> package) and <a href="https://bioconductor.org/packages/SingleCellExperiment" class="external-link">SingleCellExperiment</a>
+/ <em>Bioconductor</em> ecosystem.</p>
+<ul>
+<li><a href="d_cxg.html">From CELLxGENE to R and Bioconductor_</a></li>
+<li><a href="e_sc_workflows.html">Seurat and Bioconductor
+workflows</a></li>
+</ul>
+<p>The remaining parts walk through two chapters of <a href="https://bioconductor.org/books/release/OSCA/" class="external-link">OSCA</a>, chosen as
+much because I wanted to learn a bit more about these steps as for any
+other reason.</p>
+<ul>
+<li><a href="f_osca_cell_annotation.html">Annotating cell types</a></li>
+<li><a href="g_osca_differential_expression.html">Differential
+expression</a></li>
+</ul>
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
@@ -126,8 +149,7 @@ software:</p>
 <span><span class="co">#&gt; [29] bslib_0.5.0       tools_4.3.0       pkgdown_2.0.7     cachem_1.0.8     </span></span>
 <span><span class="co">#&gt; [33] desc_1.4.2</span></span></code></pre></div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside>
+  </main>
 </div>
 
 

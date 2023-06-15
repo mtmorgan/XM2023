@@ -10,16 +10,19 @@
     <loc>https://mtmorgan.github.io/XM2023/articles/b_course_part_1.html</loc>
   </url>
   <url>
-    <loc>https://mtmorgan.github.io/XM2023/articles/c_0_course_part_2.html</loc>
+    <loc>https://mtmorgan.github.io/XM2023/articles/c_course_part_2.html</loc>
   </url>
   <url>
-    <loc>https://mtmorgan.github.io/XM2023/articles/c_1_cxg.html</loc>
+    <loc>https://mtmorgan.github.io/XM2023/articles/d_cxg.html</loc>
   </url>
   <url>
-    <loc>https://mtmorgan.github.io/XM2023/articles/c_2_osca_cell_annotation.html</loc>
+    <loc>https://mtmorgan.github.io/XM2023/articles/e_sc_workflows.html</loc>
   </url>
   <url>
-    <loc>https://mtmorgan.github.io/XM2023/articles/c_3_osca_differential_expression.html</loc>
+    <loc>https://mtmorgan.github.io/XM2023/articles/f_osca_cell_annotation.html</loc>
+  </url>
+  <url>
+    <loc>https://mtmorgan.github.io/XM2023/articles/g_osca_differential_expression.html</loc>
   </url>
   <url>
     <loc>https://mtmorgan.github.io/XM2023/articles/index.html</loc>
@@ -35,5 +38,8 @@
   </url>
   <url>
     <loc>https://mtmorgan.github.io/XM2023/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://mtmorgan.github.io/XM2023/reference/xm2023_cxg_dataset.html</loc>
   </url>
 </urlset>
