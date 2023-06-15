@@ -140,7 +140,7 @@ A particular collection is
 ```{r}
 collection_id <- "c9706a92-0e5f-46c1-96d8-20e42467f287"
 african_american_female |>
-    filter(collection_id %in% .env$collection_id)
+    dplyr::filter(collection_id %in% .env$collection_id)
 ```
 
 The dataset associated with this collection is
@@ -148,11 +148,11 @@ The dataset associated with this collection is
 ```{r}
 dataset <-
     african_american_female |>
-    filter(collection_id %in% .env$collection_id) |>
-    select(dataset_id)
+    dplyr::filter(collection_id %in% .env$collection_id) |>
+    dplyr::select(dataset_id)
 dataset_id <-
     dataset |>
-    pull(dataset_id)
+    dplyr::pull(dataset_id)
 dataset_id
 ```
 
@@ -168,7 +168,7 @@ with these datasets.
 
 ```{r}
 selected_files <-
-    left_join(
+    dplyr::left_join(
         dataset,
         files(db),
         by = "dataset_id"
