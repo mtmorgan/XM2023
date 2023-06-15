@@ -373,6 +373,8 @@ row_data |>
     geom_histogram()
 ```
 
+## SingleCellExperiment
+
 Row (gene) data, column (cell) data, and a matrix of counts describe a
 single cell experiment. These can be assembled, along with other
 information about, e.g., reduced dimension representations, into a
@@ -495,6 +497,7 @@ E.g., add information about each unfiltered gene from `row_data`.
             return.type = "DataFrame"
         ) |>
         as_tibble()
+    gene_annotations
     ```
 
 - `left_join()` the filtered `row_data` to `gene_annotations` (i.e.,
