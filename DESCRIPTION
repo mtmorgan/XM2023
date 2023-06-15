@@ -35,7 +35,8 @@ Suggests:
     cellxgenedp, Seurat, SingleCellExperiment, zellkonverter,
     DropletTestFiles, DropletUtils, scater, EnsDb.Hsapiens.v86, scran, celldex,
     SingleR,
-    MouseGastrulationData, batchelor, igraph
+    MouseGastrulationData, batchelor, igraph,
+    BiocFileCache, tidyr, curl
 VignetteBuilder: knitr
 URL: https://mtmorgan.github.io/XM2023/
 BugReports: https://github.com/mtmorgan/XM2023/issues
