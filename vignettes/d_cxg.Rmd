@@ -24,7 +24,6 @@ library(XM2023)
 library(dplyr)
 
 ## data access
-library(hca)
 library(cellxgenedp)
 
 ## single cell data representation in R
