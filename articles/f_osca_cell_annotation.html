@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">XM2023</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,12 +154,23 @@ seed.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1000000</span><span class="op">)</span></span>
 <span><span class="va">sce.pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP</a></span><span class="op">(</span><span class="va">sce.pbmc</span>, dimred<span class="op">=</span><span class="st">"PCA"</span><span class="op">)</span></span></code></pre></div>
+<p>At this stage we can visualize our data, e.g., as a UMAP, but are not
+yet able to annotate cell types.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">umap</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">sce.pbmc</span>, type <span class="op">=</span> <span class="st">"UMAP"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span>rownames <span class="op">=</span> <span class="st">"cell_id"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">umap</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">UMAP1</span>, <span class="va">UMAP2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="f_osca_cell_annotation_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p>Perform shared nearest-neighbor clustering
 (<code><a href="https://rdrr.io/pkg/scran/man/buildSNNGraph.html" class="external-link">buildSNNGraph()</a></code>). These nearest neighbors are then used in
 community detection algorithms (<code>cluster_walktrap()</code>) to find
 similar cells. This represents a faster approach than more traditional
 hierarchical clustering.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/buildSNNGraph.html" class="external-link">buildSNNGraph</a></span><span class="op">(</span><span class="va">sce.pbmc</span>, k<span class="op">=</span><span class="fl">10</span>, use.dimred <span class="op">=</span> <span class="st">'PCA'</span><span class="op">)</span></span>
 <span><span class="va">clust</span> <span class="op">&lt;-</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/cluster_walktrap.html" class="external-link">cluster_walktrap</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">membership</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/colLabels.html" class="external-link">colLabels</a></span><span class="op">(</span><span class="va">sce.pbmc</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">clust</span><span class="op">)</span></span></code></pre></div>
@@ -171,7 +182,7 @@ hierarchical clustering.</p>
 a curated reference data set. We use the reference data derived from
 Blueprint and ENCODE data; see <code>browseVignettes("celldex")</code>
 for a description of this and other reference datasets.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu">celldex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/celldex/man/BlueprintEncodeData.html" class="external-link">BlueprintEncodeData</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; see ?celldex and browseVignettes('celldex') for documentation</span></span>
 <span><span class="co">#&gt; loading from cache</span></span>
@@ -211,7 +222,7 @@ for a description of this and other reference datasets.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Adipocytes            9</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 15 more rows</span></span></span></code></pre></div>
 <p>Annotate our data using the ‘main’ label for cell type</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/LTLA/SingleR" class="external-link">SingleR</a></span><span class="op">)</span></span>
 <span><span class="co">## assign each cell in sce.pbmc to a type</span></span>
 <span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleR/man/SingleR.html" class="external-link">SingleR</a></span><span class="op">(</span>test<span class="op">=</span><span class="va">sce.pbmc</span>, ref<span class="op">=</span><span class="va">ref</span>, labels<span class="op">=</span><span class="va">ref</span><span class="op">$</span><span class="va">label.main</span><span class="op">)</span></span>
@@ -252,12 +263,21 @@ for a description of this and other reference datasets.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> HSC             14</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Monocytes     <span style="text-decoration: underline;">1</span>258</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> NK cells       267</span></span></code></pre></div>
+<p>We can now color our UMAP with predicted cell types.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">umap_label</span> <span class="op">&lt;-</span></span>
+<span>    <span class="va">umap</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>cell_type <span class="op">=</span> <span class="va">pred</span><span class="op">$</span><span class="va">labels</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">umap_label</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">UMAP1</span>, <span class="va">UMAP2</span>, color <span class="op">=</span> <span class="va">cell_type</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="f_osca_cell_annotation_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <p>Finaly, visualize the cell annotation. Generally, B-cells and
 Monocytes are well-annotated, e.g., cells labelled ‘B-cells’ have a
 strong (yellow) signal only under the B-cell label; CD4+ and CD8+ cells
 less well-anotated. It is interesting to explore biological reasons that
 might contribute to this weaker classification.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleR/man/plotScoreHeatmap.html" class="external-link">plotScoreHeatmap</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: useNames = NA is deprecated. Instead, specify either useNames = TRUE</span></span>
 <span><span class="co">#&gt; or useNames = TRUE.</span></span>
@@ -267,7 +287,7 @@ might contribute to this weaker classification.</p>
 <span></span>
 <span><span class="co">#&gt; Warning: useNames = NA is deprecated. Instead, specify either useNames = TRUE</span></span>
 <span><span class="co">#&gt; or useNames = TRUE.</span></span></code></pre></div>
-<p><img src="f_osca_cell_annotation_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p><img src="f_osca_cell_annotation_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="other-strategies">Other strategies<a class="anchor" aria-label="anchor" href="#other-strategies"></a>
@@ -286,7 +306,7 @@ might contribute to this weaker classification.</p>
 </h2>
 <p>This document was produced with the following <em>R</em>
 software:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; R version 4.3.0 (2023-04-21)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
@@ -384,18 +404,19 @@ software:</p>
 <span><span class="co">#&gt; [111] cli_3.6.1                     locfit_1.5-9.8               </span></span>
 <span><span class="co">#&gt; [113] compiler_4.3.0                Rsamtools_2.17.0             </span></span>
 <span><span class="co">#&gt; [115] rlang_1.1.1                   crayon_1.5.2                 </span></span>
-<span><span class="co">#&gt; [117] fs_1.6.2                      ggbeeswarm_0.7.2             </span></span>
-<span><span class="co">#&gt; [119] stringi_1.7.12                viridisLite_0.4.2            </span></span>
-<span><span class="co">#&gt; [121] BiocParallel_1.35.2           munsell_0.5.0                </span></span>
-<span><span class="co">#&gt; [123] Biostrings_2.69.1             lazyeval_0.2.2               </span></span>
-<span><span class="co">#&gt; [125] Matrix_1.5-4.1                ExperimentHub_2.7.1          </span></span>
-<span><span class="co">#&gt; [127] hms_1.1.3                     sparseMatrixStats_1.13.0     </span></span>
-<span><span class="co">#&gt; [129] bit64_4.0.5                   Rhdf5lib_1.23.0              </span></span>
-<span><span class="co">#&gt; [131] KEGGREST_1.41.0               statmod_1.5.0                </span></span>
-<span><span class="co">#&gt; [133] shiny_1.7.4                   highr_0.10                   </span></span>
-<span><span class="co">#&gt; [135] interactiveDisplayBase_1.39.0 AnnotationHub_3.9.1          </span></span>
-<span><span class="co">#&gt; [137] igraph_1.4.3                  memoise_2.0.1                </span></span>
-<span><span class="co">#&gt; [139] bslib_0.5.0                   bit_4.0.5</span></span></code></pre></div>
+<span><span class="co">#&gt; [117] labeling_0.4.2                fs_1.6.2                     </span></span>
+<span><span class="co">#&gt; [119] ggbeeswarm_0.7.2              stringi_1.7.12               </span></span>
+<span><span class="co">#&gt; [121] viridisLite_0.4.2             BiocParallel_1.35.2          </span></span>
+<span><span class="co">#&gt; [123] munsell_0.5.0                 Biostrings_2.69.1            </span></span>
+<span><span class="co">#&gt; [125] lazyeval_0.2.2                Matrix_1.5-4.1               </span></span>
+<span><span class="co">#&gt; [127] ExperimentHub_2.7.1           hms_1.1.3                    </span></span>
+<span><span class="co">#&gt; [129] sparseMatrixStats_1.13.0      bit64_4.0.5                  </span></span>
+<span><span class="co">#&gt; [131] Rhdf5lib_1.23.0               KEGGREST_1.41.0              </span></span>
+<span><span class="co">#&gt; [133] statmod_1.5.0                 shiny_1.7.4                  </span></span>
+<span><span class="co">#&gt; [135] highr_0.10                    interactiveDisplayBase_1.39.0</span></span>
+<span><span class="co">#&gt; [137] AnnotationHub_3.9.1           igraph_1.5.0                 </span></span>
+<span><span class="co">#&gt; [139] memoise_2.0.1                 bslib_0.5.0                  </span></span>
+<span><span class="co">#&gt; [141] bit_4.0.5</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
