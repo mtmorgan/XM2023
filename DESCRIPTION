@@ -1,6 +1,6 @@
 Package: XM2023
 Title: Talk and Short Course Material for R / Bioconductor XM2023
-Version: 0.0.0.9013
+Version: 0.0.1
 Authors@R: c(
     person(
         "Martin", "Morgan",
@@ -34,7 +34,7 @@ Suggests:
     AnnotationHub, ensembldb,
     Seurat, SingleCellExperiment, zellkonverter,
     DropletTestFiles, DropletUtils, scater, EnsDb.Hsapiens.v86, scran, celldex,
-    SingleR,
+    scuttle, SingleR,
     MouseGastrulationData, batchelor, igraph,
     BiocFileCache, tidyr
 VignetteBuilder: knitr

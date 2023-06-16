@@ -113,6 +113,19 @@ set.seed(1000000)
 sce.pbmc <- runUMAP(sce.pbmc, dimred="PCA")
 ```
 
+At this stage we can visualize our data, e.g., as a UMAP, but are not
+yet able to annotate cell types.
+
+```{r}
+library(ggplot2)
+umap <-
+    reducedDim(sce.pbmc, type = "UMAP") |>
+    dplyr::as_tibble(rownames = "cell_id")
+ggplot(umap) +
+    aes(UMAP1, UMAP2) +
+    geom_point()
+```
+
 Perform shared nearest-neighbor clustering (`buildSNNGraph()`). These
 nearest neighbors are then used in community detection algorithms
 (`cluster_walktrap()`) to find similar cells. This represents a faster
@@ -151,6 +164,17 @@ pred |>
 pred |>
     dplyr::as_tibble() |>
     dplyr::count(labels)
+```
+
+We can now color our UMAP with predicted cell types.
+
+```{r}
+umap_label <-
+    umap |>
+    dplyr::mutate(cell_type = pred$labels)
+ggplot(umap_label) +
+    aes(UMAP1, UMAP2, color = cell_type) +
+    geom_point()
 ```
 
 Finaly, visualize the cell annotation. Generally, B-cells and

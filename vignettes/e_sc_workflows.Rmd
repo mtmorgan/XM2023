@@ -217,7 +217,7 @@ that takes the analysis from begining to end?' Answers might be
 What about the difference between the *Seurat* and *Bioconductor*
 workflows? In broad detail the analyses accomplish the same
 ends. *Seurat* is more standardized and widely used, while
-*Bioconductor* may beless standardized and more flexible.
+*Bioconductor* may be less standardized and more flexible.
 
 [Getting Started with Seurat]: https://satijalab.org/seurat
 [Seurat tutorial]: https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
