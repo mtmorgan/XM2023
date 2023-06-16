@@ -14,6 +14,33 @@ knitr::opts_chunk$set(
 )
 ```
 
+# To use this workshop
+
+- Visit https://workshop.bioconductor.org/
+- Register or log-in
+
+Already have a workshop? **STOP IT**
+
+1. Choose 'Active workshops' from the 'User' dropdown
+
+   ![](images/galaxy-user-dropdown.png)
+
+2. Select the existing workshop, and click the 'Stop' button
+
+    ![](images/galaxy-stop.png)
+
+Start a new workshop
+
+1. choose the 'X-MEETING / BBS 2023'
+2. Wait a minute or so
+3. Click to open RStudio
+4. In RStudio, choose 'File' / 'Open File...' /
+   'vignettes/c_course_part_2.Rmd'
+
+    ![](images/galaxy-screen.png)
+
+# Introduction
+
 This workshop walks through a single-cellsis with Bioconductor][OSCA]
 (OSCA). The workshop assumes some familiarity with *R*, and sufficient
 domain knowledge to know at a superficial level the technical details
