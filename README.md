@@ -2,7 +2,7 @@
 
 This document is located at https://mtmorgan.github.io/XM2023
 
-![](man/figures/bit.ly_3p1SE4J.jpeg)
+![](man/figures/bit.ly_3p1SE4J.jpeg){width=200px}
 
 This resource includes material presented at [XM2023][], the
 international conference of the Brazilian Association for
